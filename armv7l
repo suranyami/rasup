@@ -30,9 +30,6 @@ append_to_zshrc() {
   fi
 }
 
-# shellcheck disable=SC2154
-trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
-
 set -e
 
 if [ ! -d "$HOME/.bin/" ]; then
@@ -42,6 +39,36 @@ fi
 if [ ! -f "$HOME/.zshrc" ]; then
   touch "$HOME/.zshrc"
 fi
+
+fancy_echo "Updating packages..."
+sudo apt update -y
+sudo apt upgrade -y
+
+fancy_echo "Installing essential unix packages..."
+sudo apt install -y \
+build-essential \
+curl \
+git \
+autoconf \
+m4 \
+libncurses5-dev \
+libwxgtk3.0-gtk3-dev \
+libgl1-mesa-dev \
+libglu1-mesa-dev \
+libpng-dev \
+libssh-dev \
+unixodbc-dev \
+xsltproc \
+fop \
+libxml2-utils \
+libncurses-dev \
+openjdk-11-jdk \
+vim \
+zsh \
+hub \
+code
+
+sudo apt autoremove -y
 
 # shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
@@ -76,37 +103,6 @@ gem_install_or_update() {
     gem install "$@"
   fi
 }
-
-
-fancy_echo "Updating packages..."
-sudo apt update -y
-sudo apt upgrade -y
-
-fancy_echo "Installing essential unix packages..."
-sudo apt install -y \
-build-essential \
-curl \
-git \
-autoconf \
-m4 \
-libncurses5-dev \
-libwxgtk3.0-gtk3-dev \
-libgl1-mesa-dev \
-libglu1-mesa-dev \
-libpng-dev \
-libssh-dev \
-unixodbc-dev \
-xsltproc \
-fop \
-libxml2-utils \
-libncurses-dev \
-openjdk-11-jdk \
-vim \
-zsh \
-hub \
-code
-
-sudo apt autoremove -y
 
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
