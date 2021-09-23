@@ -41,7 +41,7 @@ if [ ! -f "$HOME/.zshrc" ]; then
 fi
 
 fancy_echo "Updating packages..."
-sudo apt update -y
+sudo apt update -y --fix-missing
 sudo apt upgrade -y
 
 fancy_echo "Installing essential unix packages..."
