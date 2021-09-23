@@ -191,3 +191,16 @@ install_font "Monoid"
 install_font "SauceCodePro"
 
 fc-cache -fv
+
+# Install docker
+
+fancy_echo "Installing Docker..."
+curl -sSL https://get.docker.com | sh
+sudo usermod -aG docker pi
+
+# Install Portainer
+
+fancy_echo "Installing Portainer..."
+sudo docker pull portainer/portainer-ce:latest
+sudo docker run -d -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+fancy_echo "Now go to http://localhost:9000 to setup the admin user on Portainer."
