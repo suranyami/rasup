@@ -126,6 +126,10 @@ add_or_update_asdf_plugin() {
   fi
 }
 
+# Generate SSH key
+ssh-keygen
+
+# Install ASDF
 # shellcheck disable=SC1090
 source "$HOME/.asdf/asdf.sh"
 add_or_update_asdf_plugin "ruby"
@@ -169,3 +173,21 @@ if [ -f "$HOME/.laptop.local" ]; then
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
+
+# Install some decent fonts
+
+fancy_echo "Installing better coding fonts..."
+
+mkdir -p ~/.fonts
+
+install_font() {
+  wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/$1.zip"
+  unzip "$1.zip" -d ~/.fonts
+}
+
+install_font "Hack"
+install_font "FiraCode"
+install_font "Monoid"
+install_font "SauceCodePro"
+
+fc-cache -fv
