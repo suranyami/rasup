@@ -103,7 +103,8 @@ libncurses-dev \
 openjdk-11-jdk \
 vim \
 zsh \
-hub 
+hub \
+code
 
 sudo apt autoremove -y
 
